@@ -131,3 +131,4 @@ dmypy.json
 # Custom
 const.py
 app_env/
+.vscode/
