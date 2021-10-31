@@ -1,17 +1,17 @@
 import requests
 import random
 import json
+import sys
 
 
-def getRandLeetCode():
+def getRandLeetCode(topic: str):
 	data = {}
 
 	# This header value is used in the request to fetch personal progress.
 	from const import USER_COOKIE
 	# TODO Add instructions on how to obtain this
 
-	response = requests.get('https://leetcode.com/api/problems/algorithms/', headers={'cookie': USER_COOKIE}).json()
-	# TODO: Add option to switch between topics: [algorithms, database, concurrency, etc..]
+	response = requests.get('https://leetcode.com/api/problems/' + topic, headers={'cookie': USER_COOKIE}).json()
 
 	# For debugging
 	data['user'] = response['user_name']
@@ -33,7 +33,15 @@ def getRandLeetCode():
 
 
 def main():
-	print(getRandLeetCode())
+	topics = ['algorithms', 'database', 'shell', 'concurrency']
+
+	# TODO Add option to give custom set
+	if len(sys.argv) > 1 and sys.argv[1] in topics:
+		print(getRandLeetCode(sys.argv[1]))
+	elif len(sys.argv) > 1 and sys.argv[1] == 'any':
+		print(getRandLeetCode(random.choice(topics)))
+	else:
+		print(getRandLeetCode('algorithms'))
 
 
 if __name__ == "__main__":
