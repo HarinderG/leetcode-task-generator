@@ -22,7 +22,9 @@ def getRandLeetCode(topic: str):
 	# Pick an unsolved problem
 	# TODO Add option to filter out paid only probs
 	# TODO Display difficulty level
+	
 	problem = random.choice(problem_list)
+
 	while problem['status'] == 'ac':
 		print(f'You have alread completed: {problem["stat"]["question__title_slug"]}')
 		problem = random.choice(problem_list)
