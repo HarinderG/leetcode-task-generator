@@ -11,8 +11,8 @@ def getRandLeetCode(topic: str):
 	from const import USER_COOKIE
 	# TODO Add instructions on how to obtain this
 
-	response = requests.get('https://leetcode.com/api/problems/' + topic, headers={'cookie': USER_COOKIE}).json()
-
+	response = requests.get('https://leetcode.com/api/problems/' + topic, cookies = USER_COOKIE).json()
+		
 	# For debugging
 	data['user'] = response['user_name']
 	# TODO Display current progress
