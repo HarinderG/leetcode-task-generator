@@ -21,12 +21,13 @@ def getRandLeetCode(topic: str, paid: bool = False):
 
 	# Pick an unsolved problem
 	problem = random.choice(problem_list)
-	while problem['status'] == 'ac' or problem['paid_only'] != paid:
+	while problem['status'] == 'ac' or (problem['paid_only'] != paid and paid != None):
 		print(f'You have alread completed: {problem["stat"]["question__title_slug"]}')
 		problem = random.choice(problem_list)
 
 	data['url'] = (f'https://leetcode.com/problems/{problem["stat"]["question__title_slug"]}')
 	data['difficulty'] = difficulties[problem['difficulty']['level']-1]
+	data['paid'] = problem['paid_only']
 
 	return json.dumps(data)
 
