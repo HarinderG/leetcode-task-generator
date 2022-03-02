@@ -8,7 +8,7 @@ def getRandLeetCode(topic: str):
 	data = {}
 
 	# This header value is used in the request to fetch personal progress.
-	from const import USER_COOKIE
+	from const import USER_COOKIE, difficulties
 	# TODO Add instructions on how to obtain this
 
 	response = requests.get('https://leetcode.com/api/problems/' + topic, cookies = USER_COOKIE).json()
@@ -20,16 +20,14 @@ def getRandLeetCode(topic: str):
 	problem_list = response['stat_status_pairs']
 
 	# Pick an unsolved problem
-	# TODO Add option to filter out paid only probs
-	# TODO Display difficulty level
-	
+	# TODO Add option to filter out paid only probs	
 	problem = random.choice(problem_list)
-
 	while problem['status'] == 'ac':
 		print(f'You have alread completed: {problem["stat"]["question__title_slug"]}')
 		problem = random.choice(problem_list)
 
 	data['url'] = (f'https://leetcode.com/problems/{problem["stat"]["question__title_slug"]}')
+	data['difficulty'] = difficulties[problem['difficulty']['level']-1]
 
 	return json.dumps(data)
 
