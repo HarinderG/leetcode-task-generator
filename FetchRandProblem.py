@@ -4,7 +4,7 @@ import json
 import sys
 
 
-def getRandLeetCode(topic: str):
+def getRandLeetCode(topic: str, paid: bool = False):
 	data = {}
 
 	# This header value is used in the request to fetch personal progress.
@@ -20,9 +20,8 @@ def getRandLeetCode(topic: str):
 	problem_list = response['stat_status_pairs']
 
 	# Pick an unsolved problem
-	# TODO Add option to filter out paid only probs	
 	problem = random.choice(problem_list)
-	while problem['status'] == 'ac':
+	while problem['status'] == 'ac' or problem['paid_only'] != paid:
 		print(f'You have alread completed: {problem["stat"]["question__title_slug"]}')
 		problem = random.choice(problem_list)
 
