@@ -12,9 +12,7 @@ def getRandLeetCode(topic: str, paid: bool = False):
 	# TODO Add instructions on how to obtain this
 
 	response = requests.get('https://leetcode.com/api/problems/' + topic, cookies = USER_COOKIE).json()
-		
-	# For debugging
-	data['user'] = response['user_name']
+
 	# TODO Display current progress
 
 	problem_list = response['stat_status_pairs']
@@ -25,6 +23,8 @@ def getRandLeetCode(topic: str, paid: bool = False):
 		print(f'You have alread completed: {problem["stat"]["question__title_slug"]}')
 		problem = random.choice(problem_list)
 
+	# Build json response
+	data['user'] = response['user_name']
 	data['url'] = (f'https://leetcode.com/problems/{problem["stat"]["question__title_slug"]}')
 	data['difficulty'] = difficulties[problem['difficulty']['level']-1]
 	data['paid'] = problem['paid_only']
