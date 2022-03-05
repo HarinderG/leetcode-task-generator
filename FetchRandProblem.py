@@ -13,8 +13,6 @@ def getRandLeetCode(topic: str, paid: bool = False):
 
 	response = requests.get('https://leetcode.com/api/problems/' + topic, cookies = USER_COOKIE).json()
 
-	# TODO Display current progress
-
 	problem_list = response['stat_status_pairs']
 
 	# Pick an unsolved problem
