@@ -27,6 +27,11 @@ def getRandLeetCode(topic: str, paid: bool = False):
 	data['url'] = (f'https://leetcode.com/problems/{problem["stat"]["question__title_slug"]}')
 	data['difficulty'] = difficulties[problem['difficulty']['level']-1]
 	data['paid'] = problem['paid_only']
+	data['progress'] = {
+		'easy': response['ac_easy'],
+		'medium': response['ac_medium'],
+		'hard': response['ac_hard']
+	}
 
 	return json.dumps(data)
 
