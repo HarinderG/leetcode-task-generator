@@ -45,6 +45,8 @@ def getRandLeetCode(topic: str, paid: bool = False):
 def main():
 	topics = ['algorithms', 'database', 'shell', 'concurrency']
 
+	# TODO Add option to select difficulty
+
 	if len(sys.argv) > 1 and sys.argv[1] in topics:
 		getRandLeetCode(sys.argv[1])
 	elif len(sys.argv) > 1 and sys.argv[1] == 'any':
