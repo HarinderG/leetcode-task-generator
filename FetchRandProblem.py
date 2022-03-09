@@ -37,11 +37,12 @@ def getRandLeetCode(topic: str, paid: bool = False):
 def main():
 	topics = ['algorithms', 'database', 'shell', 'concurrency']
 
-	# TODO Add option to give custom set
 	if len(sys.argv) > 1 and sys.argv[1] in topics:
 		print(getRandLeetCode(sys.argv[1]))
 	elif len(sys.argv) > 1 and sys.argv[1] == 'any':
 		print(getRandLeetCode(random.choice(topics)))
+	elif len(sys.argv) > 1 and set(sys.argv[1:len(sys.argv)]).issubset(set(topics)):
+		print(getRandLeetCode(random.choice(sys.argv[1:len(sys.argv)])))
 	else:
 		print(getRandLeetCode('algorithms'))
 
