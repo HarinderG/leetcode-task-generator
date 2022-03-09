@@ -36,7 +36,7 @@ def getRandLeetCode(topic: str, paid: bool = False):
 	api = TodoistAPI(TODOIST_API_KEY)
 
 	try:
-		api.add_task(content=f'[{data["title"]} ({data["difficulty"]})]({data["url"]})', project_id=2261356449)
+		api.add_task(content=f'[{data["title"]} ({data["difficulty"]})]({data["url"]})', project_id=2261356449, due_string='today')
 		print('task created')
 	except Exception as error:
 		print(error)
