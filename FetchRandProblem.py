@@ -2,13 +2,14 @@ import requests
 import random
 import json
 import sys
+from todoist_api_python.api import TodoistAPI
 
 
 def getRandLeetCode(topic: str, paid: bool = False):
 	data = {}
 
 	# This header value is used in the request to fetch personal progress.
-	from const import USER_COOKIE, difficulties
+	from const import USER_COOKIE, difficulties, TODOIST_API_KEY
 	# TODO Add instructions on how to obtain this
 
 	response = requests.get('https://leetcode.com/api/problems/' + topic, cookies = USER_COOKIE).json()
@@ -22,6 +23,7 @@ def getRandLeetCode(topic: str, paid: bool = False):
 
 	# Build json response
 	data['user'] = response['user_name']
+	data['title'] = problem['stat']['question__title']
 	data['url'] = (f'https://leetcode.com/problems/{problem["stat"]["question__title_slug"]}')
 	data['difficulty'] = difficulties[problem['difficulty']['level']-1]
 	data['paid'] = problem['paid_only']
@@ -31,20 +33,26 @@ def getRandLeetCode(topic: str, paid: bool = False):
 		'hard': response['ac_hard']
 	}
 
-	return json.dumps(data)
+	api = TodoistAPI(TODOIST_API_KEY)
+
+	try:
+		api.add_task(content=f'[{data["title"]} ({data["difficulty"]})]({data["url"]})', project_id=2261356449)
+		print('task created')
+	except Exception as error:
+		print(error)
 
 
 def main():
 	topics = ['algorithms', 'database', 'shell', 'concurrency']
 
 	if len(sys.argv) > 1 and sys.argv[1] in topics:
-		print(getRandLeetCode(sys.argv[1]))
+		getRandLeetCode(sys.argv[1])
 	elif len(sys.argv) > 1 and sys.argv[1] == 'any':
-		print(getRandLeetCode(random.choice(topics)))
+		getRandLeetCode(random.choice(topics))
 	elif len(sys.argv) > 1 and set(sys.argv[1:len(sys.argv)]).issubset(set(topics)):
-		print(getRandLeetCode(random.choice(sys.argv[1:len(sys.argv)])))
+		getRandLeetCode(random.choice(sys.argv[1:len(sys.argv)]))
 	else:
-		print(getRandLeetCode('algorithms'))
+		getRandLeetCode('algorithms')
 
 
 if __name__ == "__main__":
